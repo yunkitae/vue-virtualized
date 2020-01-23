@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b1a90842-d2b2-44b9-bf5b-1d90bed36e29" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/assets/scss/_base.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/components/Item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/layouts/default.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/nuxt.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/pages/index.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/plugins/virtualized.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/utils/animation-frame.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/utils/request-animation-timeout.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/masonry/Masonry.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/masonry/MasonrySlot.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/masonry/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/masonry/positionCache.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tslint.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../vue-zigzag-grid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../wmp-style-admin/components/CalendarHorizon.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1WdlqOlxxtuTmgMBu1gbu0FyXY5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showModules" value="false" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/demo/utils" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="/usr/local/lib/node_modules/prettier" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/demo/plugins" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/demo/utils" />
+      <recent name="$PROJECT_DIR$/src/masonry" />
+    </key>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b1a90842-d2b2-44b9-bf5b-1d90bed36e29" name="Default Changelist" comment="" />
+      <created>1579487542319</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579487542319</updated>
+      <workItem from="1579487544790" duration="301000" />
+      <workItem from="1579487886328" duration="65672000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="488" y="241" width="845" height="582" key="find.popup" timestamp="1579748177186">
+      <screen x="0" y="23" width="1680" height="972" />
+    </state>
+    <state x="-535" y="-820" width="803" height="582" key="find.popup/-1093.-1057.1920.1057/846.-1057.1920.1057/0.23.1680.972@-1093.-1057.1920.1057" timestamp="1579741936330" />
+    <state x="-535" y="-820" width="803" height="582" key="find.popup/-1093.-1057.1920.1057/846.-1080.1920.1080/0.23.1680.972@-1093.-1057.1920.1057" timestamp="1579746734159" />
+    <state x="488" y="241" width="845" height="582" key="find.popup/-1093.-1057.1920.1057/846.-1080.1920.1080/0.23.1680.972@0.23.1680.972" timestamp="1579748177186" />
+    <state x="-468" y="-840" width="670" height="691" key="search.everywhere.popup" timestamp="1579684847378">
+      <screen x="-1093" y="-1080" width="1920" height="1080" />
+    </state>
+    <state x="-468" y="-822" width="670" height="676" key="search.everywhere.popup/-1093.-1057.1920.1057/846.-1080.1920.1080/0.23.1680.972@-1093.-1057.1920.1057" timestamp="1579658774307" />
+    <state x="-468" y="-840" width="670" height="691" key="search.everywhere.popup/-1093.-1080.1920.1080/846.-1080.1920.1080/0.0.1680.1050@-1093.-1080.1920.1080" timestamp="1579684847378" />
+  </component>
+</project>

@@ -1,0 +1,53 @@
+{
+  "name": "vue-virtualized",
+  "version": "0.0.1",
+  "description": "Vue Virtual component",
+  "author": "funkibitto <funkibitto@wemakeprice.com>",
+  "private": false,
+  "keywords": [
+    "vue-virtualize"
+  ],
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nuxt dev -c demo/nuxt.config.js"
+  },
+  "dependencies": {
+    "interval-tree-1d": "^1.0.3"
+  },
+  "devDependencies": {
+    "nuxt-property-decorator": "latest",
+    "@nuxt/typescript": "latest",
+    "@nuxt/typescript-build": "^0.5.5",
+    "@nuxt/webpack": "^2.11.0",
+    "@nuxtjs/eslint-config": "^2.0.0",
+    "@nuxtjs/eslint-config-typescript": "^1.0.0",
+    "@nuxtjs/style-resources": "^0.1.2",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "babel-eslint": "^10.0.3",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.6.0",
+    "eslint-plugin-markdown": "^1.0.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.1.2",
+    "node-sass": "^4.13.0",
+    "nuxt": "^2.11.0",
+    "prettier": "^1.19.1",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "sass-loader": "^8.0.2",
+    "ts-node": "^8.5.4",
+    "vue": "^2.6.11",
+    "vue-template-compiler": "^2.6.11",
+    "core-js": ">=2.6.5 <3.0.0"
+  }
+}

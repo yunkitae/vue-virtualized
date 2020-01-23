@@ -1,0 +1,117 @@
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+:root {
+  --app-height: 100%;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+p,
+section,
+article,
+header,
+footer,
+blockquote,
+th,
+td,
+img,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+}
+
+body {
+}
+
+legend {
+  display: none;
+}
+
+a {
+  color: #000;
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-user-select: none;
+}
+
+li {
+  list-style: none;
+}
+
+img,
+fieldset {
+  border: 0;
+  vertical-align: top;
+}
+
+textarea,
+input[type="search"],
+input[type="text"],
+input[type="number"],
+input[type="password"] {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0;
+  outline: 0;
+}
+
+input[type="checkbox"] {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+button {
+  background-color: transparent;
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  &:focus {
+    outline: 0;
+  }
+  &::-moz-focus-inner {
+    padding: 0;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+em {
+  font-style: normal;
+}
+
+svg {
+  fill: currentColor;
+}

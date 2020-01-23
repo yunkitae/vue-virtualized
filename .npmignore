@@ -1,0 +1,15 @@
+.DS_Store
+.git*
+.idea
+.parcel
+.cache
+Makefile
+.babelrc
+.eslintrc
+webpack.config.js
+demo/
+dev/
+test/
+
+node_modules
+
