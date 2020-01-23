@@ -33,13 +33,12 @@ export default {
 </script>
 <style scoped="scoped" lang="scss">
 .item {
-  padding-bottom: 10px;
   position: relative;
   width: 100%;
   .inner {
     border-radius: 0.5rem;
     color: #fff;
-    margin-bottom: 0.5rem;
+    margin-bottom: 10px;
     align-items: center;
     display: flex;
     justify-content: center;

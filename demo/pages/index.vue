@@ -27,7 +27,7 @@
 </template>
 <script>
 import Item from '~/components/Item.vue';
-const ROW_HEIGHTS = [100, 150, 200, 170, 120];
+const ROW_HEIGHTS = [55, 65, 80, 100, 120, 150, 170, 180, 200];
 const COLORS = ['red', 'green', '#29230A', '#0A2429', '#0C687A', 'blue', '#6B2411', 'orange'];
 
 export default {
@@ -40,7 +40,7 @@ export default {
       overscan: 0,
       gutter: 10,
       grid: 3,
-      size: 10000,
+      size: 1000,
       containerWidth: 0,
       containerHeight: 0
     };

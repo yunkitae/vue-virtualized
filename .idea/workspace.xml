@@ -2,24 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b1a90842-d2b2-44b9-bf5b-1d90bed36e29" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/assets/scss/_base.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/components/Item.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/layouts/default.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/nuxt.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/pages/index.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/plugins/virtualized.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/utils/animation-frame.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/utils/request-animation-timeout.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/masonry/Masonry.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/masonry/MasonrySlot.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/masonry/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/masonry/positionCache.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tslint.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../vue-zigzag-grid" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../wmp-style-admin/components/CalendarHorizon.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/components/Item.vue" beforeDir="false" afterPath="$PROJECT_DIR$/demo/components/Item.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo/pages/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/demo/pages/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/masonry/Masonry.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/masonry/Masonry.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1579487542319</updated>
       <workItem from="1579487544790" duration="301000" />
-      <workItem from="1579487886328" duration="65672000" />
+      <workItem from="1579487886328" duration="67211000" />
     </task>
     <servers />
   </component>
@@ -95,6 +83,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="-524" y="-1046" key="CommitChangelistDialog2" timestamp="1579759010148">
+      <screen x="-1093" y="-1080" width="1920" height="1080" />
+    </state>
+    <state x="-524" y="-1046" key="CommitChangelistDialog2/-1093.-1080.1920.1080/846.-1080.1920.1080/0.0.1680.1050@-1093.-1080.1920.1080" timestamp="1579759010148" />
     <state x="488" y="241" width="845" height="582" key="find.popup" timestamp="1579748177186">
       <screen x="0" y="23" width="1680" height="972" />
     </state>

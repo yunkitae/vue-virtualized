@@ -82,6 +82,7 @@ export default {
       tmpPositions: {},
       createdSlots: [],
       outerHeight: 0,
+      overscanByPixels: this.overscan + 10,
       positionFromTop: 0
     };
   },
@@ -122,6 +123,7 @@ export default {
     }
   },
   created() {
+    console.log('list length', this.list.length)
     this.init();
   },
   mounted() {
@@ -145,8 +147,8 @@ export default {
       let startIndex = 0;
       let endIndex;
       this.positionCache.range(
-        Math.max(0, this._scrollTop - this.overscan),
-        this.containerHeight + this.overscan * 2,
+        Math.max(0, this._scrollTop - this.overscanByPixels),
+        this.containerHeight + this.overscanByPixels * 2,
         (index, left, top) => {
           this.tmpPositions[index] = { left, top };
           if (typeof endIndex === 'undefined') {
@@ -170,12 +172,14 @@ export default {
       const shortestColumnSize = this.positionCache.shortestColumnSize;
       const displayListCount = this.positionCache.count;
       const listCount = this.list.length;
+
+      // console.log('$$$$$$$$$$$$$$$$$$$$::::::: ', shortestColumnSize, displayListCount, listCount);
       // We need to measure additional cells for this layout
-      if (shortestColumnSize < this._scrollTop + this.containerHeight + this.overscan && displayListCount < listCount) {
+      if ((shortestColumnSize < this._scrollTop + this.containerHeight + this.overscanByPixels) && displayListCount < listCount) {
         const batchSize = Math.min(
           listCount - displayListCount,
           Math.ceil(
-            (((this._scrollTop + this.containerHeight + this.overscan - shortestColumnSize) / this.defaultHeight) *
+            (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) / this.defaultHeight) *
               this.width) /
               this.width
           )
