@@ -19,9 +19,13 @@ export default {
     height: 0,
     style: null
   }),
+  created() {
+    this.$nextTick(() => {
+      this.height = this.$el.clientHeight;
+      this.notify();
+    });
+  },
   mounted() {
-    this.height = this.$el.clientHeight;
-    this.notify();
   },
   methods: {
     notify() {

@@ -1,22 +1,20 @@
 <template>
   <div class="vue-masonry" :style="outerStyle">
-    <template v-if="isShow">
-      <masonry-slot
-        v-for="(item, index) in displayItems"
-        :key="startIndex + index"
+    <masonry-slot
+      v-for="(item, index) in displayItems"
+      :key="startIndex + index"
+      :width="width"
+      :order="startIndex + index"
+      @reflow="reflow"
+    >
+      <slot
+        name="cell"
         :width="width"
         :order="startIndex + index"
-        @reflow="reflow"
-      >
-        <slot
-          name="cell"
-          :width="width"
-          :order="startIndex + index"
-          :item="item"
-          :index="startIndex + index"
-        />
-      </masonry-slot>
-    </template>
+        :item="item"
+        :index="startIndex + index"
+      />
+    </masonry-slot>
   </div>
 </template>
 <script>
@@ -42,7 +40,7 @@ export default {
     },
     defaultHeight: {
       type: Number,
-      default: 300
+      default: 200
     },
     overscan: {
       type: Number,
@@ -75,14 +73,13 @@ export default {
   },
   data() {
     return {
-      isShow: false,
       width: 0,
       startIndex: 0,
       endIndex: 0,
       tmpPositions: {},
       createdSlots: [],
       outerHeight: 0,
-      overscanByPixels: this.overscan + 10,
+      overscanByPixels: 0,
       positionFromTop: 0
     };
   },
@@ -101,17 +98,10 @@ export default {
       return this.scrollTop;
     },
     outerStyle() {
-      if (!this.isShow) {
-        return {
-          width: 0,
-          height: 0
-        };
-      } else {
-        return {
-          height: this.outerHeight + 'px',
-          width: this.containerWidth + 'px'
-        };
-      }
+      return {
+        height: this.outerHeight + 'px',
+        width: this.containerWidth + 'px'
+      };
     }
   },
   watch: {
@@ -119,54 +109,57 @@ export default {
       this.forceRender();
     },
     _scrollTop(val) {
-      this.updateDisplayIndex();
+      this.updateDisplayIndex(val);
     }
   },
   created() {
-    console.log('list length', this.list.length)
     this.init();
   },
   mounted() {
-    this.isShow = true;
     this.updatePositionOffset();
-    this.forceRender();
+    this.updateDisplayIndex();
   },
   updated() {
-    console.log('updated')
-    // this.forceRender();
-    // this.forceRender
-    // ();
   },
   methods: {
     init() {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseContainerPadding);
+      this.overscanByPixels = this.overscan + 1;
       const columnSizeMap = this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseContainerPadding);
       this.positionCache = new PositionCache(columnSizeMap);
+      this.outerHeight = this.getEstimatedTotalHeight();
     },
-    updateDisplayIndex() {
-      let startIndex = 0;
+    getEstimatedTotalHeight() {
+      const total = this.list.length;
+      return this.positionCache.estimateTotalHeight(total, this.grid, this.defaultHeight);
+    },
+    updateDisplayIndex(scrollTop) {
+      // console.log('updateDisplayIndex######## ', this.containerHeight , scrollTop, this.overscanByPixels);
+      let startIndex = this.startIndex;
       let endIndex;
-      this.positionCache.range(
-        Math.max(0, this._scrollTop - this.overscanByPixels),
-        this.containerHeight + this.overscanByPixels * 2,
-        (index, left, top) => {
-          this.tmpPositions[index] = { left, top };
-          if (typeof endIndex === 'undefined') {
-            startIndex = index;
-            endIndex = index;
-          } else {
-            startIndex = Math.min(startIndex, index);
-            endIndex = Math.max(endIndex, index);
-          }
+      const _scrollTop = Math.max(0, scrollTop - this.overscanByPixels);
+      const _height = this.containerHeight + this.overscanByPixels * 2;
+      this.positionCache.range(_scrollTop, _height, (index, left, top) => {
+        // console.log('########index', index, left, top, _scrollTop, _height, 'updateDisplayIndex');
+        if (typeof endIndex === 'undefined') {
+          startIndex = index;
+          endIndex = index;
+        } else {
+          startIndex = Math.min(startIndex, index);
+          endIndex = Math.max(endIndex, index);
         }
-      );
+      });
+      // console.warn('undefinded endIndex');
+      // if (!endIndex) return;
+
       const measureEndIndex = this.getMeasureEndIndex();
+      // console.log('calculate######## measureEndIndex', measureEndIndex);
       if (measureEndIndex) {
         endIndex = measureEndIndex;
       }
-      console.log('updateDisplayIndex', startIndex, endIndex, this._scrollTop)
       this.startIndex = startIndex;
       this.endIndex = endIndex;
+      console.log('calculate######## ', startIndex, endIndex);
     },
     getMeasureEndIndex() {
       const shortestColumnSize = this.positionCache.shortestColumnSize;
@@ -175,16 +168,19 @@ export default {
 
       // console.log('$$$$$$$$$$$$$$$$$$$$::::::: ', shortestColumnSize, displayListCount, listCount);
       // We need to measure additional cells for this layout
-      if ((shortestColumnSize < this._scrollTop + this.containerHeight + this.overscanByPixels) && displayListCount < listCount) {
+      if (
+        shortestColumnSize < this._scrollTop + this.containerHeight + this.overscanByPixels &&
+        displayListCount < listCount
+      ) {
         const batchSize = Math.min(
           listCount - displayListCount,
           Math.ceil(
-            (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) / this.defaultHeight) *
+            (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) /
+              this.defaultHeight) *
               this.width) /
               this.width
           )
         );
-        console.warn('batchSize', batchSize)
         if (batchSize) {
           return displayListCount + batchSize - 1;
         }
@@ -195,7 +191,7 @@ export default {
     forceRender() {
       const measureEndIndex = this.getMeasureEndIndex();
       if (measureEndIndex) {
-        console.warn('forceRender')
+        // console.warn('forceRender');
         this.endIndex = measureEndIndex;
       }
     },
@@ -237,11 +233,11 @@ export default {
       this.createdSlots.push(meta);
       this.$nextTick(() => {
         const $items = this.createdSlots;
+        this.createdSlots = [];
         if ($items.length === 0) return;
         const metas = $items.map(slot => slot.getMeta());
         metas.sort((a, b) => a.order - b.order);
         this.calculate(metas);
-        this.createdSlots = [];
         if (this.endIndex === this.list.length - 1) {
           this.$emit('reflowed', this);
         } else {
@@ -255,18 +251,20 @@ export default {
       metas.forEach(meta => {
         let rect;
         const index = meta.vm.order;
-        const _positions = this.tmpPositions[index];
-        if (!_positions) {
+        const _position = this.positionCache.getPosition(index);
+        if (!_position) {
+          // console.log('NOTHING!!!!', index, this.tmpPositions)
           const { left, top } = this.positionCache.nextColumnPosition;
           rect = { top, left, width: this.width, height: meta.height };
-          this.positionCache.setPosition( index, left, top, rect.height);
+          // console.log('this.tmpPosition', this.tmpPositions, index)
+          this.positionCache.setPosition(index, left, top, rect.height);
         } else {
-          rect = { ..._positions, width: this.width, height: meta.height };
-          delete this.tmpPositions[index]; // 삭제
+          rect = { left: _position[0], top: _position[1], width: this.width, height: meta.height };
         }
         meta.vm.style = this.buildStyle(rect);
       });
-      this.outerHeight = this.positionCache.tallestColumnSize;
+      // console.log('########### length', Object.keys(this.tmpPositions).length, this.tmpPositions)
+      this.outerHeight = this.getEstimatedTotalHeight();
     },
 
     buildStyle(rect) {
@@ -284,7 +282,7 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-.vue-masonry{
+.vue-masonry {
   position: relative;
 }
 </style>
