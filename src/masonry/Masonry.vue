@@ -122,7 +122,6 @@ export default {
   },
   updated() {
     if (this.isInvalidateCellSizeAfterRender) {
-      console.warn('Vue lifecycle update');
       this.updateDisplayIndex();
     }
   },
