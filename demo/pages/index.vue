@@ -27,7 +27,7 @@
 </template>
 <script>
 import Item from '~/components/Item.vue';
-const ROW_HEIGHTS = [100, 120, 150, 170, 180, 200];
+const ROW_HEIGHTS = [200, 300];
 const COLORS = ['red', 'green', '#29230A', '#0A2429', '#0C687A', 'blue', '#6B2411', 'orange'];
 
 export default {
@@ -74,7 +74,7 @@ export default {
     onScroll(event) {
       this.scrollTop = window.scrollY;
     },
-    reflowed () {
+    reflowed() {
     },
   }
 };

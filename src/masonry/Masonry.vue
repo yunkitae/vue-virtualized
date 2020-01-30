@@ -40,7 +40,7 @@ export default {
     },
     defaultHeight: {
       type: Number,
-      default: 200
+      default: 250
     },
     overscan: {
       type: Number,
@@ -80,6 +80,7 @@ export default {
       createdSlots: [],
       outerHeight: 0,
       overscanByPixels: 0,
+      isInvalidateCellSizeAfterRender: false,
       positionFromTop: 0
     };
   },
@@ -108,8 +109,8 @@ export default {
     list() {
       this.forceRender();
     },
-    _scrollTop(val) {
-      this.updateDisplayIndex(val);
+    _scrollTop() {
+      this.updateDisplayIndex();
     }
   },
   created() {
@@ -117,9 +118,13 @@ export default {
   },
   mounted() {
     this.updatePositionOffset();
-    this.updateDisplayIndex();
+    this.forceRender();
   },
   updated() {
+    if (this.isInvalidateCellSizeAfterRender) {
+      console.warn('Vue lifecycle update');
+      this.updateDisplayIndex();
+    }
   },
   methods: {
     init() {
@@ -133,13 +138,16 @@ export default {
       const total = this.list.length;
       return this.positionCache.estimateTotalHeight(total, this.grid, this.defaultHeight);
     },
-    updateDisplayIndex(scrollTop) {
+    updateDisplayIndex() {
+      const scrollTop = this._scrollTop;
       // console.log('updateDisplayIndex######## ', this.containerHeight , scrollTop, this.overscanByPixels);
       let startIndex = this.startIndex;
       let endIndex;
       const _scrollTop = Math.max(0, scrollTop - this.overscanByPixels);
       const _height = this.containerHeight + this.overscanByPixels * 2;
+      this.isInvalidateCellSizeAfterRender = true;
       this.positionCache.range(_scrollTop, _height, (index, left, top) => {
+        this.isInvalidateCellSizeAfterRender = false;
         // console.log('########index', index, left, top, _scrollTop, _height, 'updateDisplayIndex');
         if (typeof endIndex === 'undefined') {
           startIndex = index;
@@ -150,16 +158,16 @@ export default {
         }
       });
       // console.warn('undefinded endIndex');
-      // if (!endIndex) return;
 
       const measureEndIndex = this.getMeasureEndIndex();
       // console.log('calculate######## measureEndIndex', measureEndIndex);
       if (measureEndIndex) {
         endIndex = measureEndIndex;
       }
+      console.log(startIndex, endIndex)
       this.startIndex = startIndex;
       this.endIndex = endIndex;
-      console.log('calculate######## ', startIndex, endIndex);
+      // console.log('calculate######## ', startIndex, endIndex);
     },
     getMeasureEndIndex() {
       const shortestColumnSize = this.positionCache.shortestColumnSize;
@@ -177,10 +185,11 @@ export default {
           Math.ceil(
             (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) /
               this.defaultHeight) *
-              this.width) /
+              this.containerWidth) /
               this.width
           )
         );
+
         if (batchSize) {
           return displayListCount + batchSize - 1;
         }
@@ -232,9 +241,9 @@ export default {
     reflow(meta) {
       this.createdSlots.push(meta);
       this.$nextTick(() => {
+        if (this.createdSlots.length === 0) return;
         const $items = this.createdSlots;
         this.createdSlots = [];
-        if ($items.length === 0) return;
         const metas = $items.map(slot => slot.getMeta());
         metas.sort((a, b) => a.order - b.order);
         this.calculate(metas);
@@ -253,17 +262,14 @@ export default {
         const index = meta.vm.order;
         const _position = this.positionCache.getPosition(index);
         if (!_position) {
-          // console.log('NOTHING!!!!', index, this.tmpPositions)
           const { left, top } = this.positionCache.nextColumnPosition;
           rect = { top, left, width: this.width, height: meta.height };
-          // console.log('this.tmpPosition', this.tmpPositions, index)
           this.positionCache.setPosition(index, left, top, rect.height);
         } else {
           rect = { left: _position[0], top: _position[1], width: this.width, height: meta.height };
         }
         meta.vm.style = this.buildStyle(rect);
       });
-      // console.log('########### length', Object.keys(this.tmpPositions).length, this.tmpPositions)
       this.outerHeight = this.getEstimatedTotalHeight();
     },
 
@@ -284,5 +290,6 @@ export default {
 <style scoped="scoped" lang="scss">
 .vue-masonry {
   position: relative;
+  will-change: transform;
 }
 </style>

@@ -22,7 +22,7 @@ export default class PositionCache {
   // Store tops and bottoms of each cell for fast intersection lookup.
   _intervalTree;
 
-  _positions: [] = [];
+  _positions: Array<[number, number]> = [];
 
   // Maps cell index to x coordinates for quick lookup.
   _leftMap = {};
@@ -40,7 +40,6 @@ export default class PositionCache {
   }
 
   setPosition(index: number, left: number, top: number, height: number): void {
-    console.log('setPosition', index, left, top);
     this._positions.push([left, top]);
     // console.log('_intervalTree', this._intervalTree);
     this._intervalTree.insert([top, top + height, index]);
