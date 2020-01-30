@@ -140,7 +140,6 @@ export default {
     },
     updateDisplayIndex() {
       const scrollTop = this._scrollTop;
-      // console.log('updateDisplayIndex######## ', this.containerHeight , scrollTop, this.overscanByPixels);
       let startIndex = this.startIndex;
       let endIndex;
       const _scrollTop = Math.max(0, scrollTop - this.overscanByPixels);
@@ -148,7 +147,6 @@ export default {
       this.isInvalidateCellSizeAfterRender = true;
       this.positionCache.range(_scrollTop, _height, (index, left, top) => {
         this.isInvalidateCellSizeAfterRender = false;
-        // console.log('########index', index, left, top, _scrollTop, _height, 'updateDisplayIndex');
         if (typeof endIndex === 'undefined') {
           startIndex = index;
           endIndex = index;
@@ -157,24 +155,20 @@ export default {
           endIndex = Math.max(endIndex, index);
         }
       });
-      // console.warn('undefinded endIndex');
 
       const measureEndIndex = this.getMeasureEndIndex();
-      // console.log('calculate######## measureEndIndex', measureEndIndex);
       if (measureEndIndex) {
         endIndex = measureEndIndex;
       }
-      console.log(startIndex, endIndex)
+      // console.log(startIndex, endIndex)
       this.startIndex = startIndex;
       this.endIndex = endIndex;
-      // console.log('calculate######## ', startIndex, endIndex);
     },
     getMeasureEndIndex() {
       const shortestColumnSize = this.positionCache.shortestColumnSize;
       const displayListCount = this.positionCache.count;
       const listCount = this.list.length;
 
-      // console.log('$$$$$$$$$$$$$$$$$$$$::::::: ', shortestColumnSize, displayListCount, listCount);
       // We need to measure additional cells for this layout
       if (
         shortestColumnSize < this._scrollTop + this.containerHeight + this.overscanByPixels &&
