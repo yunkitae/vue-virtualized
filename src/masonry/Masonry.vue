@@ -7,13 +7,7 @@
       :order="startIndex + index"
       @reflow="reflow"
     >
-      <slot
-        name="cell"
-        :width="width"
-        :order="startIndex + index"
-        :item="item"
-        :index="startIndex + index"
-      />
+      <slot name="cell" :width="width" :order="startIndex + index" :item="item" :index="startIndex + index" />
     </masonry-slot>
   </div>
 </template>
@@ -26,7 +20,7 @@ export default {
     MasonrySlot
   },
   props: {
-    isUseContainerPadding: {
+    isUseCrossSideGutter: {
       type: Boolean,
       default: true
     },
@@ -67,7 +61,7 @@ export default {
       default: 10
     },
     state: {
-      type: Object,
+      type: String,
       default: null
     }
   },
@@ -76,7 +70,6 @@ export default {
       width: 0,
       startIndex: 0,
       endIndex: 0,
-      tmpPositions: {},
       createdSlots: [],
       outerHeight: 0,
       overscanByPixels: 0,
@@ -118,7 +111,7 @@ export default {
   },
   mounted() {
     this.updatePositionOffset();
-    this.forceRender();
+    this.updateDisplayIndex();
   },
   updated() {
     if (this.isInvalidateCellSizeAfterRender) {
@@ -127,11 +120,25 @@ export default {
   },
   methods: {
     init() {
-      this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseContainerPadding);
+      this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
       this.overscanByPixels = this.overscan + 1;
-      const columnSizeMap = this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseContainerPadding);
-      this.positionCache = new PositionCache(columnSizeMap);
+      let context;
+      const _state = this.state ? JSON.parse(this.state) : null;
+      if (_state) {
+        context = { ..._state };
+      } else {
+        context = {
+          columnSizeMap: this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseCrossSideGutter)
+        };
+      }
+      this.positionCache = new PositionCache(context);
       this.outerHeight = this.getEstimatedTotalHeight();
+      this.$nextTick(() => {
+        window.scroll({
+          top: _state ? _state.scrollTop : 0,
+          left: 0
+        });
+      });
     },
     getEstimatedTotalHeight() {
       const total = this.list.length;
@@ -159,7 +166,6 @@ export default {
       if (measureEndIndex) {
         endIndex = measureEndIndex;
       }
-      // console.log(startIndex, endIndex)
       this.startIndex = startIndex;
       this.endIndex = endIndex;
     },
@@ -199,9 +205,9 @@ export default {
     },
 
     // column width
-    getWidth(containerWidth, grid, gutter, isUseContainerPadding) {
+    getWidth(containerWidth, grid, gutter, isUseCrossSideGutter) {
       let width;
-      if (isUseContainerPadding) {
+      if (isUseCrossSideGutter) {
         width = (containerWidth - (grid + 1) * gutter) / grid;
       } else {
         width = (containerWidth - gutter * (grid - 1)) / grid;
@@ -210,11 +216,11 @@ export default {
     },
 
     // column 별 top position map
-    getColumnSizeMap(grid, width, gutter, isUseContainerPadding) {
+    getColumnSizeMap(grid, width, gutter, isUseCrossSideGutter) {
       const map = {};
       for (let i = 0; i < grid; ++i) {
         let left;
-        if (isUseContainerPadding) {
+        if (isUseCrossSideGutter) {
           left = i ? width * i + gutter * (i + 1) : gutter;
         } else {
           left = i ? width * i + gutter * i : 0;
@@ -227,14 +233,16 @@ export default {
     // element offset top position 정의
     updatePositionOffset() {
       if (this.$el) {
-        this.positionFromTop = this.$el.getBoundingClientRect().top;
+        this.positionFromTop = window.pageYOffset + this.$el.getBoundingClientRect().top;
       }
     },
     // from child reflow
     reflow(meta) {
       this.createdSlots.push(meta);
       this.$nextTick(() => {
-        if (this.createdSlots.length === 0) return;
+        if (this.createdSlots.length === 0) {
+          return;
+        }
         const $items = this.createdSlots;
         this.createdSlots = [];
         const metas = $items.map(slot => slot.getMeta());
@@ -276,6 +284,16 @@ export default {
         WebkitTransform: `translateX(${rect.left}px) translateY(${rect.top}px)`,
         opacity: 1
       };
+    },
+
+    // for save state
+    getState() {
+      return JSON.stringify({
+        positions: this.positionCache.positions,
+        intervals: this.positionCache.intervals,
+        columnSizeMap: this.positionCache.columnSizeMap,
+        scrollTop: this.scrollTop
+      });
     }
   }
 };
