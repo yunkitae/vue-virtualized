@@ -1,6 +1,12 @@
 <template>
   <main>
-    <h1> Masonry Demo Page </h1>
+    <h1>Masonry Demo Page </h1>
+    <div class="report-wrap">
+      <p id="time"></p>
+      <p id="memory"></p>
+      <p>MAX: {{ max }}MB</p>
+      <p>MIN: {{ min }}MB</p>
+    </div>
     <div class="masonry-wrap">
       <client-only>
         <masonry
@@ -42,7 +48,9 @@ export default {
       grid: 5,
       size: 10000,
       containerWidth: 0,
-      containerHeight: 0
+      containerHeight: 0,
+      min: null,
+      max: 0
     };
   },
   computed: {
@@ -66,6 +74,7 @@ export default {
   },
   mounted() {
     window.addEventListener('scroll', this.onScroll);
+    this.reportPerformance();
   },
   destroyed() {
     window.removeEventListener('scroll', this.onScroll);
@@ -73,9 +82,29 @@ export default {
   methods: {
     onScroll(event) {
       this.scrollTop = window.scrollY;
+      this.reportPerformance();
     },
-    reflowed() {
-    },
+    reflowed() {},
+    reportPerformance() {
+      const initTime = Date.now();
+      const timeElement = document.getElementById('time')
+      if (timeElement && initTime) {
+        const timeWaste = Date.now() - initTime;
+        timeElement.textContent = 'Build waste: ' + timeWaste + ' ms.';
+      }
+
+      const memoryElement = document.getElementById('memory');
+      const performance = window.performance || window.webkitPerformance
+      if (memoryElement && performance && performance.memory && performance.memory.usedJSHeapSize) {
+        const memoryUsed = parseInt(performance.memory.usedJSHeapSize / (1024 * 1024));
+        memoryElement.textContent = 'Memory used: ' + memoryUsed + ' MB.';
+        this.max = Math.max(memoryUsed, this.max);
+        if (!this.min) {
+          this.min = memoryUsed;
+        }
+        this.min = Math.min(memoryUsed, this.min);
+      }
+    }
   }
 };
 </script>
@@ -88,6 +117,14 @@ main {
   position: relative;
   .masonry-wrap {
     margin-top: 30px;
+  }
+  .report-wrap {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+    background: yellow;
+    padding: 5px;
   }
 }
 </style>
