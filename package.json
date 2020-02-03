@@ -1,14 +1,21 @@
 {
   "name": "vue-virtualized",
   "version": "0.0.1",
-  "description": "Vue Virtual component",
+  "main": "dist/vue-virtualized.umd.js",
+  "module": "dist/vue-virtualized.esm.js",
+  "unpkg": "dist/vue-virtualized.min.js",
+  "description": "Vue Virtualized Plugin",
   "author": "funkibitto <funkibitto@wemakeprice.com>",
   "private": false,
   "keywords": [
     "vue-virtualize"
   ],
+  "files": [
+    "dist/*"
+  ],
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev nuxt dev -c demo/nuxt.config.js"
+    "dev": "cross-env NODE_ENV=dev nuxt dev -c demo/nuxt.config.js",
+    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js"
   },
   "dependencies": {
     "interval-tree-1d": "^1.0.3"
@@ -37,6 +44,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
+    "minimist": "^1.2.0",
     "node-sass": "^4.13.0",
     "nuxt": "^2.11.0",
     "nuxt-property-decorator": "latest",
@@ -45,6 +53,10 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "rollup-plugin-vue": "^5.1.6",
     "sass-loader": "^8.0.2",
     "ts-node": "^8.5.4",
     "vue": "^2.6.11",

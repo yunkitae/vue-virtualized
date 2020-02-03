@@ -125,7 +125,7 @@ export default {
       let context;
       const _state = this.state ? JSON.parse(this.state) : null;
       if (_state) {
-        context = { ..._state };
+        context = Object.assign({}, _state);
       } else {
         context = {
           columnSizeMap: this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseCrossSideGutter)

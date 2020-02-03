@@ -15,10 +15,12 @@ export default {
       default: 0
     }
   },
-  data: () => ({
-    height: 0,
-    style: null
-  }),
+  data() {
+    return {
+      height: 0,
+      style: null
+    };
+  },
   created() {
     this.$nextTick(() => {
       this.height = this.$el.clientHeight;
