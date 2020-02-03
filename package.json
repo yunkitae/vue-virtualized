@@ -1,17 +1,35 @@
 {
-  "name": "vue-virtualized",
-  "version": "0.0.1",
-  "main": "dist/vue-virtualized.umd.js",
-  "module": "dist/vue-virtualized.esm.js",
-  "unpkg": "dist/vue-virtualized.min.js",
-  "description": "Vue Virtualized Plugin",
-  "author": "funkibitto <funkibitto@wemakeprice.com>",
+  "name": "vue-list-virtualized",
+  "author": "yunkitae <yun30081@gmail.com>",
+  "user": "yunkitae",
+  "version": "0.1.0",
   "private": false,
-  "keywords": [
-    "vue-virtualize"
-  ],
+  "main": "dist/vue-list-virtualized.js",
+  "unpkg": "dist/vue-list-virtualized.js",
+  "jsnext:main": "dist/vue-list-virtualized.js",
+  "description": "Vue components for efficiently rendering large, scrollable lists and tabular data",
   "files": [
     "dist/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yunkitae/vue-virtualized.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yunkitae/vue-virtualized/issues"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "vue-list-virtualized",
+    "vue-component",
+    "virtual",
+    "list",
+    "scrolling",
+    "infinite",
+    "virtualized",
+    "masonry",
+    "grid"
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=dev nuxt dev -c demo/nuxt.config.js",

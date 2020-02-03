@@ -8,7 +8,7 @@ import typescript from 'rollup-plugin-typescript';
 const config = {
   input: 'src/index.js',
   output: {
-    file: 'dist/vue-virtualized.js',
+    file: 'dist/vue-list-virtualized.js',
     name: 'VueVirtualized',
     format: 'es',
     globals: {
