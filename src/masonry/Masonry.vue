@@ -168,7 +168,6 @@ export default {
       }
       this.startIndex = startIndex;
       this.endIndex = endIndex;
-      console.log(this.startIndex, this.endIndex)
     },
     getMeasureEndIndex() {
       const shortestColumnSize = this.positionCache.shortestColumnSize;

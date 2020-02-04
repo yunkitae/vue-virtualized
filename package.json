@@ -2,7 +2,7 @@
   "name": "vue-list-virtualized",
   "author": "yunkitae <yun30081@gmail.com>",
   "user": "yunkitae",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": false,
   "main": "dist/vue-list-virtualized.js",
   "unpkg": "dist/vue-list-virtualized.js",
