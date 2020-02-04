@@ -168,6 +168,7 @@ export default {
       }
       this.startIndex = startIndex;
       this.endIndex = endIndex;
+      console.log(this.startIndex, this.endIndex)
     },
     getMeasureEndIndex() {
       const shortestColumnSize = this.positionCache.shortestColumnSize;
@@ -185,12 +186,11 @@ export default {
             (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) /
               this.defaultHeight) *
               this.containerWidth) /
-              this.width
+            this.width
           )
         );
-
         if (batchSize) {
-          return displayListCount + batchSize - 1;
+          return displayListCount + batchSize - 1 || 1;
         }
       }
       return null;
@@ -299,8 +299,8 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-.vue-masonry {
-  position: relative;
-  will-change: transform;
-}
+  .vue-masonry {
+    position: relative;
+    will-change: transform;
+  }
 </style>
