@@ -100,7 +100,7 @@ export default {
   },
   watch: {
     list() {
-      this.forceRender();
+      this.updateDisplayIndex();
     },
     _scrollTop() {
       this.updateDisplayIndex();
