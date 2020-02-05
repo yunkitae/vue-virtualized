@@ -7,7 +7,7 @@
       :order="startIndex + index"
       @reflow="reflow"
     >
-      <slot name="cell" :width="width" :order="startIndex + index" :item="item" :index="startIndex + index" />
+      <slot name="cell" :width="width" :order="startIndex + index" :item="item" :index="startIndex + index"></slot>
     </masonry-slot>
   </div>
 </template>
@@ -163,7 +163,7 @@ export default {
       });
 
       const measureEndIndex = this.getMeasureEndIndex();
-      if (measureEndIndex) {
+      if (~measureEndIndex) {
         endIndex = measureEndIndex;
       }
       this.startIndex = startIndex;
@@ -185,20 +185,19 @@ export default {
             (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) /
               this.defaultHeight) *
               this.containerWidth) /
-            this.width
+              this.width
           )
         );
         if (batchSize) {
-          return displayListCount + batchSize - 1 || 1;
+          return displayListCount + batchSize - 1;
         }
       }
-      return null;
+      return -1;
     },
 
     forceRender() {
       const measureEndIndex = this.getMeasureEndIndex();
-      if (measureEndIndex) {
-        // console.warn('forceRender');
+      if (~measureEndIndex) {
         this.endIndex = measureEndIndex;
       }
     },
@@ -298,8 +297,8 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-  .vue-masonry {
-    position: relative;
-    will-change: transform;
-  }
+.vue-masonry {
+  position: relative;
+  will-change: transform;
+}
 </style>
