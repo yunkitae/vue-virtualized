@@ -8,6 +8,8 @@ npm install vue-list-virtualized --save
 
 ## Demo
 ```shell
+git clone https://github.com/yunkitae/vue-virtualized.git
+npm i
 npm run dev
 ```
 
