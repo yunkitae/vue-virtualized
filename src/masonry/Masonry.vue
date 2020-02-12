@@ -118,6 +118,9 @@ export default {
       this.updateDisplayIndex();
     }
   },
+  beforeDestroy() {
+    this.$emit('updateState', this.getState());
+  },
   methods: {
     init() {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
@@ -299,6 +302,5 @@ export default {
 <style scoped="scoped" lang="scss">
 .vue-masonry {
   position: relative;
-  will-change: transform;
 }
 </style>

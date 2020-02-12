@@ -56,6 +56,7 @@ export default {
   padding: 0;
   opacity: 0;
   box-sizing: border-box;
+  will-change: transform;
   transform: translate(0, 0);
 }
 </style>
