@@ -33,15 +33,20 @@
   ],
   "scripts": {
     "dev": "cross-env NODE_ENV=dev nuxt dev -c demo/nuxt.config.js",
-    "build": "cross-env NODE_ENV=production rollup --config build/rollup.config.js"
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "dist": "cross-env NODE_ENV=production rollup --config build/rollup.config.js"
   },
   "dependencies": {
+    "nuxt": "^2.11.0",
     "interval-tree-1d": "^1.0.3"
   },
   "devDependencies": {
+    "@nuxt/types": "^0.6.2",
+    "@nuxt/typescript-runtime": "^0.3.9",
     "@nuxt/typescript": "latest",
-    "@nuxt/typescript-build": "^0.5.5",
-    "@nuxt/webpack": "^2.11.0",
+    "@nuxt/typescript-build": "^0.5.7",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/style-resources": "^0.1.2",
@@ -64,7 +69,6 @@
     "eslint-plugin-vue": "^6.1.2",
     "minimist": "^1.2.0",
     "node-sass": "^4.13.0",
-    "nuxt": "^2.11.0",
     "nuxt-property-decorator": "latest",
     "prettier": "^1.19.1",
     "rollup": "^1.30.1",

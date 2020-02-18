@@ -2,6 +2,12 @@ export default {
   srcDir: 'demo/',
   modern: 'client',
   buildModules: ['@nuxt/typescript-build'],
+  server: {
+    timing: {
+      total: true
+    },
+    host: '0.0.0.0' // default: localhost,
+  },
   head: {
     title: 'Vue virtualized plugin',
     htmlAttrs: {
@@ -14,6 +20,10 @@ export default {
       { name: 'apple-mobile-web-app-capable', content: 'yes' }
     ]
   },
+  modules: [
+    '@nuxtjs/style-resources',
+  ],
+  loadingIndicator: '~/assets/indicators/three-bounce.html',
   plugins: [{ src: '~/plugins/virtualized.ts', mode: 'client' }],
   css: [{ src: '~/assets/scss/_base.scss', lang: 'scss' }]
 };
