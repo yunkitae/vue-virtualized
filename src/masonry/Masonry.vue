@@ -107,7 +107,7 @@ export default {
     }
   },
   created() {
-    this.init();
+    this.init(this.state);
   },
   mounted() {
     this.updatePositionOffset();
@@ -118,15 +118,15 @@ export default {
       this.updateDisplayIndex();
     }
   },
-  beforeDestroy() {
-    this.$emit('updateState', this.getState());
-  },
   methods: {
-    init() {
+    init(state) {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
       this.overscanByPixels = this.overscan + 1;
+      this.startIndex = 0;
+      this.endIndex = 0;
+      this.outerHeight = 0;
       let context;
-      const _state = this.state ? JSON.parse(this.state) : null;
+      const _state = state ? JSON.parse(state) : null;
       if (_state) {
         context = Object.assign({}, _state);
       } else {
@@ -141,6 +141,11 @@ export default {
           top: _state ? _state.scrollTop : 0,
           left: 0
         });
+      });
+    },
+    reset() {
+      this.$nextTick(() => {
+        this.init();
       });
     },
     getEstimatedTotalHeight() {
