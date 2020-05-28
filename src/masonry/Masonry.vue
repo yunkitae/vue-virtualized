@@ -7,7 +7,8 @@
       :order="startIndex + index"
       @reflow="reflow"
     >
-      <slot name="cell" :width="width" :order="startIndex + index" :item="item" :index="startIndex + index"></slot>
+      <slot name="cell" :width="width" :order="startIndex + index" :item="item"
+:index="startIndex + index"></slot>
     </masonry-slot>
   </div>
 </template>
@@ -74,7 +75,8 @@ export default {
       outerHeight: 0,
       overscanByPixels: 0,
       isInvalidateCellSizeAfterRender: false,
-      positionFromTop: 0
+      positionFromTop: 0,
+      initScrollPosition: 0
     };
   },
   computed: {
@@ -107,28 +109,29 @@ export default {
     }
   },
   created() {
-    this.init(this.state);
+    const _state = this.state ? JSON.parse(this.state) : null;
+    this.init({ state: _state });
   },
   mounted() {
     this.updatePositionOffset();
     this.updateDisplayIndex();
   },
   updated() {
+    this.updatePositionOffset();
     if (this.isInvalidateCellSizeAfterRender) {
       this.updateDisplayIndex();
     }
   },
   methods: {
-    init(state) {
+    init({ state, startScrollPosition = 0 }) {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
       this.overscanByPixels = this.overscan + 1;
       this.startIndex = 0;
       this.endIndex = 0;
       this.outerHeight = 0;
       let context;
-      const _state = state ? JSON.parse(state) : null;
-      if (_state) {
-        context = Object.assign({}, _state);
+      if (state) {
+        context = Object.assign({}, state);
       } else {
         context = {
           columnSizeMap: this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseCrossSideGutter)
@@ -136,16 +139,22 @@ export default {
       }
       this.positionCache = new PositionCache(context);
       this.outerHeight = this.getEstimatedTotalHeight();
+      if (state && state.scrollTop) {
+        this.initScrollTo(state.scrollTop);
+      } else if (this.positionFromTop < window.scrollY) {
+        this.initScrollTo(startScrollPosition);
+      }
+    },
+
+    initScrollTo(top) {
       this.$nextTick(() => {
-        window.scroll({
-          top: _state ? _state.scrollTop : 0,
-          left: 0
-        });
+        window.scroll({ top, left: 0 });
       });
     },
-    reset() {
+
+    reset(startScrollPosition = 0) {
       this.$nextTick(() => {
-        this.init();
+        this.init({ startScrollPosition });
       });
     },
     getEstimatedTotalHeight() {
