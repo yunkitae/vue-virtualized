@@ -4,11 +4,17 @@
       v-for="(item, index) in displayItems"
       :key="startIndex + index"
       :width="width"
+      :first-slot-height="firstSlotHeight"
       :order="startIndex + index"
       @reflow="reflow"
     >
-      <slot name="cell" :width="width" :order="startIndex + index" :item="item"
-:index="startIndex + index"></slot>
+      <slot
+        name="cell"
+        :width="width"
+        :order="startIndex + index"
+        :item="item"
+        :index="startIndex + index"
+      />
     </masonry-slot>
   </div>
 </template>
@@ -24,6 +30,10 @@ export default {
     isUseCrossSideGutter: {
       type: Boolean,
       default: true
+    },
+    isUseFirstSlotHeight: {
+      type: Boolean,
+      default: false
     },
     containerWidth: {
       type: Number,
@@ -70,12 +80,13 @@ export default {
     return {
       width: 0,
       startIndex: 0,
-      endIndex: 0,
+      endIndex: 1,
       createdSlots: [],
       outerHeight: 0,
       overscanByPixels: 0,
       isInvalidateCellSizeAfterRender: false,
       positionFromTop: 0,
+      firstSlotHeight: 0,
       initScrollPosition: 0
     };
   },
@@ -132,6 +143,7 @@ export default {
       let context;
       if (state) {
         context = Object.assign({}, state);
+        this.firstSlotHeight = context.firstSlotHeight;
       } else {
         context = {
           columnSizeMap: this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseCrossSideGutter)
@@ -202,7 +214,7 @@ export default {
             (((this._scrollTop + this.containerHeight + this.overscanByPixels - shortestColumnSize) /
               this.defaultHeight) *
               this.containerWidth) /
-              this.width
+            this.width
           )
         );
         if (batchSize) {
@@ -271,23 +283,47 @@ export default {
       });
     },
 
+    getSlotHeight(height) {
+      if (this.isUseFirstSlotHeight) {
+        if (this.firstSlotHeight) {
+          console.warn(939393939393939239393)
+          return this.firstSlotHeight
+        } else {
+          this.firstSlotHeight = height
+        }
+      }
+
+      return height;
+    },
+
     // child slot style 값 정의
     calculate(metas) {
       metas.forEach(meta => {
         let rect;
         const index = meta.vm.order;
         const _position = this.positionCache.getPosition(index);
+
+        // 첫번째 slot height가 모든 slot에 고정이 될때 사용하기 위함
+        let _height;
+        if (this.isUseFirstSlotHeight) {
+          _height = this.firstSlotHeight || meta.height;
+          this.firstSlotHeight = _height;
+        } else {
+          _height = meta.height;
+        }
+
         if (!_position) {
           const { left, top } = this.positionCache.nextColumnPosition;
-          rect = { top, left, width: this.width, height: meta.height };
-          this.positionCache.setPosition(index, left, top, rect.height);
+          rect = { top, left, width: this.width, height: _height };
+          this.positionCache.setPosition(index, left, top, _height);
         } else {
-          rect = { left: _position[0], top: _position[1], width: this.width, height: meta.height };
+          rect = { left: _position[0], top: _position[1], width: this.width, height: _height };
         }
         meta.vm.style = this.buildStyle(rect);
       });
       this.outerHeight = this.getEstimatedTotalHeight();
     },
+
 
     buildStyle(rect) {
       return {
@@ -307,6 +343,7 @@ export default {
         positions: this.positionCache.positions,
         intervals: this.positionCache.intervals,
         columnSizeMap: this.positionCache.columnSizeMap,
+        firstSlotHeight: this.firstSlotHeight,
         scrollTop: this.scrollTop
       });
     }

@@ -13,6 +13,10 @@ export default {
     order: {
       type: Number,
       default: 0
+    },
+    firstSlotHeight: {
+      type: Number,
+      default: 0
     }
   },
   data() {
@@ -21,15 +25,20 @@ export default {
       style: null
     };
   },
-  created() {
-    this.$nextTick(() => {
-      this.height = this.$el.clientHeight;
-      this.notify();
-    });
-  },
   mounted() {
+    this.init();
   },
   methods: {
+    init() {
+      if (this.firstSlotHeight) {
+        this.notify();
+      } else {
+        this.$nextTick(() => {
+          this.height = this.$el.clientHeight;
+          this.notify();
+        });
+      }
+    },
     notify() {
       this.$emit('reflow', this);
     },
@@ -40,8 +49,7 @@ export default {
         order: this.order,
         width: this.width,
         isWholeGrid: this.isWholeGrid,
-        height: this.height,
-        moveClass: this.moveClass
+        height: this.height
       };
     }
   }
