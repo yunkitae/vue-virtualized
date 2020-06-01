@@ -8,13 +8,7 @@
       :order="startIndex + index"
       @reflow="reflow"
     >
-      <slot
-        name="cell"
-        :width="width"
-        :order="startIndex + index"
-        :item="item"
-        :index="startIndex + index"
-      />
+      <slot name="cell" :width="width" :order="startIndex + index" :item="item" :index="startIndex + index" />
     </masonry-slot>
   </div>
 </template>
@@ -122,7 +116,7 @@ export default {
   },
   created() {
     const _state = this.state ? JSON.parse(this.state) : null;
-    this.init({ state: _state, startScrollPosition: this.startScrollPosition });
+    this.init(_state);
     if (_state && _state.scrollTop) {
       this.$nextTick(() => {
         this.initScrollTo(_state.scrollTop);
@@ -140,7 +134,7 @@ export default {
     }
   },
   methods: {
-    init({ state = null }) {
+    init(state) {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
       this.overscanByPixels = this.overscan + 1;
       this.startIndex = 0;
@@ -166,7 +160,7 @@ export default {
       this.endIndex = 0;
       this.$nextTick(() => {
         this.initScrollTo(startScrollPosition);
-        this.init({});
+        this.init();
       });
     },
     getEstimatedTotalHeight() {
@@ -350,7 +344,7 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-  .vue-masonry {
-    position: relative;
-  }
+.vue-masonry {
+  position: relative;
+}
 </style>
