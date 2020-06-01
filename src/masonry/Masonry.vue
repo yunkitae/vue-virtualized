@@ -153,9 +153,8 @@ export default {
       this.outerHeight = this.getEstimatedTotalHeight();
     },
     initScrollTo(top) {
-      this.$nextTick(() => {
-        window.scroll({ top, left: 0 });
-      });
+      window.scroll({ top, left: 0 });
+      this.updateDisplayIndex();
     },
     reset(startScrollPosition = 0) {
       this.startIndex = 0;
@@ -344,7 +343,7 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-.vue-masonry {
-  position: relative;
-}
+  .vue-masonry {
+    position: relative;
+  }
 </style>
