@@ -153,15 +153,15 @@ export default {
       this.outerHeight = this.getEstimatedTotalHeight();
     },
     initScrollTo(top) {
-      window.scroll({ top, left: 0 });
+      this.$nextTick(() => {
+        window.scroll({ top, left: 0 });
+      });
     },
     reset(startScrollPosition = 0) {
       this.startIndex = 0;
       this.endIndex = 0;
-      this.$nextTick(() => {
-        this.initScrollTo(startScrollPosition);
-        this.init();
-      });
+      this.init();
+      this.initScrollTo(startScrollPosition);
     },
     getEstimatedTotalHeight() {
       const total = this.list.length;
