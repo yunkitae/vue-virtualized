@@ -99,10 +99,11 @@ export default {
     },
     // scrollTop 값 조정
     _scrollTop() {
-      if (this.isUseWindowScroll && this.$el) {
+      if (this.isUseWindowScroll) {
         return Math.max(0, this.scrollTop - this.positionFromTop);
+      } else {
+        return this.scrollTop;
       }
-      return this.scrollTop;
     },
     outerStyle() {
       return {
@@ -121,7 +122,12 @@ export default {
   },
   created() {
     const _state = this.state ? JSON.parse(this.state) : null;
-    this.init({ state: _state });
+    this.init({ state: _state, startScrollPosition: this.startScrollPosition });
+    if (_state && _state.scrollTop) {
+      this.$nextTick(() => {
+        this.initScrollTo(_state.scrollTop);
+      });
+    }
   },
   mounted() {
     this.updatePositionOffset();
@@ -134,7 +140,7 @@ export default {
     }
   },
   methods: {
-    init({ state, startScrollPosition = 0 }) {
+    init({ state = null }) {
       this.width = this.getWidth(this.containerWidth, this.grid, this.gutter, this.isUseCrossSideGutter);
       this.overscanByPixels = this.overscan + 1;
       this.startIndex = 0;
@@ -151,22 +157,16 @@ export default {
       }
       this.positionCache = new PositionCache(context);
       this.outerHeight = this.getEstimatedTotalHeight();
-      if (state && state.scrollTop) {
-        this.initScrollTo(state.scrollTop);
-      } else if (this.positionFromTop < window.scrollY) {
-        this.initScrollTo(startScrollPosition);
-      }
     },
-
     initScrollTo(top) {
-      this.$nextTick(() => {
-        window.scroll({ top, left: 0 });
-      });
+      window.scroll({ top, left: 0 });
     },
-
     reset(startScrollPosition = 0) {
+      this.startIndex = 0;
+      this.endIndex = 0;
       this.$nextTick(() => {
-        this.init({ startScrollPosition });
+        this.initScrollTo(startScrollPosition);
+        this.init({});
       });
     },
     getEstimatedTotalHeight() {
@@ -178,6 +178,7 @@ export default {
       let startIndex = this.startIndex;
       let endIndex;
       const _scrollTop = Math.max(0, scrollTop - this.overscanByPixels);
+
       const _height = this.containerHeight + this.overscanByPixels * 2;
       this.isInvalidateCellSizeAfterRender = true;
       this.positionCache.range(_scrollTop, _height, (index, left, top) => {
@@ -286,7 +287,6 @@ export default {
     getSlotHeight(height) {
       if (this.isUseFirstSlotHeight) {
         if (this.firstSlotHeight) {
-          console.warn(939393939393939239393)
           return this.firstSlotHeight
         } else {
           this.firstSlotHeight = height
@@ -324,7 +324,6 @@ export default {
       this.outerHeight = this.getEstimatedTotalHeight();
     },
 
-
     buildStyle(rect) {
       return {
         top: 0,
@@ -351,7 +350,7 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-.vue-masonry {
-  position: relative;
-}
+  .vue-masonry {
+    position: relative;
+  }
 </style>
