@@ -140,27 +140,31 @@ export default {
       this.startIndex = 0;
       this.endIndex = 0;
       this.outerHeight = 0;
-      let context;
+      let context = null;
       if (state) {
         context = Object.assign({}, state);
         this.firstSlotHeight = context.firstSlotHeight;
-      } else {
+      }
+      this.initPositionCache(context);
+      this.outerHeight = this.getEstimatedTotalHeight();
+    },
+    initScrollTo(top) {
+      window.scroll({ top, left: 0 });
+    },
+    reset(startScrollPosition = 0) {
+      this.startIndex = 0;
+      this.endIndex = 0;
+      this.outerHeight = 0;
+      this.initPositionCache();
+      this.initScrollTo(startScrollPosition);
+    },
+    initPositionCache(context) {
+      if (!context) {
         context = {
           columnSizeMap: this.getColumnSizeMap(this.grid, this.width, this.gutter, this.isUseCrossSideGutter)
         };
       }
       this.positionCache = new PositionCache(context);
-      this.outerHeight = this.getEstimatedTotalHeight();
-    },
-    initScrollTo(top) {
-      window.scroll({ top, left: 0 });
-      this.updateDisplayIndex();
-    },
-    reset(startScrollPosition = 0) {
-      this.startIndex = 0;
-      this.endIndex = 0;
-      this.init();
-      this.initScrollTo(startScrollPosition);
     },
     getEstimatedTotalHeight() {
       const total = this.list.length;
@@ -343,7 +347,7 @@ export default {
 };
 </script>
 <style scoped="scoped" lang="scss">
-  .vue-masonry {
-    position: relative;
-  }
+.vue-masonry {
+  position: relative;
+}
 </style>
